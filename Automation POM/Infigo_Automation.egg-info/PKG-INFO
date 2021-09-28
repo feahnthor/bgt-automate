@@ -1,0 +1,13 @@
+Metadata-Version: 1.2
+Name: Infigo-Automation
+Version: 0.0.0
+Summary: Automation for backgroundtown
+Home-page: UNKNOWN
+Author: feahnthor
+License: MIT
+Description: UNKNOWN
+Keywords: infigo,automation
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=2.7
