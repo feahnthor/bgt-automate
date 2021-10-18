@@ -4,11 +4,10 @@ class Locators:
   """
 #Locators for login page
   test = 'https://backgroundtown.com/Admin/Product' 
-  base_prod_url = 'https://backgroundtown.com/Admin/Product/Edit/2630' #Mark Lane
+  base_prod_url = 'https://backgroundtown.com/Admin/Product/Edit/2629' #Mark Lane
   #base_prod_url = 'https://backgroundtown.com/Admin/Product/Edit/2605' #Kara KMC
   # base_floor_prod_url = 'https://backgroundtown.com/Admin/Product/Edit/2568' #Mark Lane
   base_floor_prod_url = 'https://backgroundtown.com/Admin/Product/Edit/2606' # Kara KMC
-  variant_url = 'https://backgroundtown.com/Admin/ProductVariant/Edit/'
   email = 'Email:'
   password = 'Password:'
   login_button = 'login'

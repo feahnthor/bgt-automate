@@ -90,7 +90,7 @@ class BaseProduct:
       logger.critical(self.name, sys.stderr, f'Could not find Copy Product Button\nProduct: {self.driver.current_url} \nException: {e}' )
       if self.driver != None:
         kill_browser()
-      sys.exit(1) # kill program
+      sys.exit(1)
     write(self.name, into=self.name_field)
     click(CheckBox(copy_img)) # deselects the copy image option that is default
     click(self.copy)
@@ -98,10 +98,7 @@ class BaseProduct:
     #https://stackoverflow.com/questions/24928582/expectedcondition-invisibility-of-element-located-takes-more-time-selenium-web
     WebDriverWait(self.driver, 30).until(EC.invisibility_of_element_located((By.ID, Locators.copy_window)))
     self.current_url = self.driver.current_url
-    click('Published')
-    click('Show in Search Result')
     logger.info(f'Product copied successfully.\nCurrent url: {self.current_url}')
-    
 
   def save_and_edit(self):
     '''
@@ -173,7 +170,7 @@ class BaseProduct:
         driver().location_once_scrolled_into_view allows for scrolling into view
           https://stackoverflow.com/questions/41744368/scrolling-to-element-using-webdriver
     """
-    tags = self.tags + [self.designer] + self.colors + self.themes
+    tags = self.tags + self.designer + self.colors + self.themes
     # Resolves Karas issue of not having to type the tags into the intranet form, since desinger, colors, and themes are added to the tags
     self.tag_loc = Locators.tag_class
     wait_until(Text(self.copy).exists)
@@ -263,19 +260,17 @@ class BaseProduct:
 
   def go_to_variants(self):
     """
-    Assumes page url contains Admin/Product/Edit/{productid #} in order to switch variants tab
+    Assumes page url contains Admin/Product/Edit/ in order to switch variants tab
     """
-    # self.variants = Locators.variants
-    # self.unnamed = Locators.unnamed
-    # self.attr = Locators.attribute
-    self.current_url = self.driver.current_url # in case copy_product() has not ran
-    self.prod_id = re.sub('[^0-9]', '', self.current_url)
-    go_to(f'{Locators.variant_url}{self.prod_id}')
-    # try:
-    #   wait_until(Text(self.variants).exists)
-    #   click(self.variants)
-    #   wait_until(Text(self.unnamed).exists)
-    #   click(self.unnamed)
-    #   click(self.attr)
-    # except StaleElementReferenceException:
-    #   logger.warning(f'Unable to go to product variants page. Trying again... {self.name} \n{self.driver.current_url}')
+    self.variants = Locators.variants
+    self.unnamed = Locators.unnamed
+    self.attr = Locators.attribute
+
+    try:
+      wait_until(Text(self.variants).exists)
+      click(self.variants)
+      wait_until(Text(self.unnamed).exists)
+      click(self.unnamed)
+      click(self.attr)
+    except StaleElementReferenceException:
+      logger.warning(f'Unable to go to product variants page. Trying again... {self.name} \n{self.driver.current_url}')
