@@ -59,7 +59,7 @@
         "mailhost": "mail.acilab.com",
         "fromaddr": "h.feahn@acilab.com",
         "toaddrs": ["h.feahn@acilab.com"],
-        "subject": "Something went wrong"
+        "subject": "Error Copying product- Backgroundtown"
       }
     },
     "loggers": { },

@@ -13,7 +13,7 @@ class DriverSetup:
     super().__init__()
     self.url = url
     # self.options = FirefoxOptions()
-    # self.optiongs.add_argument('--width=1920')
+    # self.options.add_argument('--width=1920')
     # self.options.add_argument('--height=1020')
     # self.driver = start_firefox(self.url, options=self.options)
 

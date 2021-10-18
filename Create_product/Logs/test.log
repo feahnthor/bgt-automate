@@ -1,0 +1,20 @@
+{"asctime": "2021-09-09 11:32:58,452", "name": "test logger", "levelname": "CRITICAL", "message": "This is critical"}
+{"asctime": "2021-09-09 11:32:58,743", "name": "test logger", "levelname": "DEBUG", "message": "This is a debug"}
+{"asctime": "2021-09-09 11:32:58,744", "name": "test logger", "levelname": "INFO", "message": "this is just info"}
+{"asctime": "2021-09-09 11:32:58,745", "name": "test logger", "levelname": "WARNING", "message": "this is a warning "}
+{"asctime": "2021-09-09 11:59:52,499", "name": "test logger", "levelname": "CRITICAL", "message": "This is critical", "lineno": 41}
+{"asctime": "2021-09-09 11:59:52,789", "name": "test logger", "levelname": "DEBUG", "message": "This is a debug", "lineno": 42}
+{"asctime": "2021-09-09 11:59:52,792", "name": "test logger", "levelname": "INFO", "message": "this is just info", "lineno": 43}
+{"asctime": "2021-09-09 11:59:52,796", "name": "test logger", "levelname": "WARNING", "message": "this is a warning ", "lineno": 44}
+{"asctime": "2021-09-09 12:00:09,159", "name": "test logger", "levelname": "CRITICAL", "message": "This is critical", "linen": null}
+{"asctime": "2021-09-09 12:00:09,455", "name": "test logger", "levelname": "DEBUG", "message": "This is a debug", "linen": null}
+{"asctime": "2021-09-09 12:00:09,458", "name": "test logger", "levelname": "INFO", "message": "this is just info", "linen": null}
+{"asctime": "2021-09-09 12:00:09,460", "name": "test logger", "levelname": "WARNING", "message": "this is a warning ", "linen": null}
+{"asctime": "2021-09-09 12:01:55,408", "name": "test logger", "levelname": "CRITICAL", "message": "This is critical", "lineno": 41, "processName": "MainProcess"}
+{"asctime": "2021-09-09 12:01:55,621", "name": "test logger", "levelname": "DEBUG", "message": "This is a debug", "lineno": 42, "processName": "MainProcess"}
+{"asctime": "2021-09-09 12:01:55,625", "name": "test logger", "levelname": "INFO", "message": "this is just info", "lineno": 43, "processName": "MainProcess"}
+{"asctime": "2021-09-09 12:01:55,628", "name": "test logger", "levelname": "WARNING", "message": "this is a warning ", "lineno": 44, "processName": "MainProcess"}
+{"asctime": "2021-09-09 12:03:57,596", "name": "test logger", "levelname": "CRITICAL", "message": "This is critical", "lineno": 41, "processName": "MainProcess", "funcName": "<module>", "module": "main", "pathname": "\\\\work\\tech\\Henry\\Programs\\Python\\infigo automation\\Automation POM\\main.py"}
+{"asctime": "2021-09-09 12:03:57,902", "name": "test logger", "levelname": "DEBUG", "message": "This is a debug", "lineno": 42, "processName": "MainProcess", "funcName": "<module>", "module": "main", "pathname": "\\\\work\\tech\\Henry\\Programs\\Python\\infigo automation\\Automation POM\\main.py"}
+{"asctime": "2021-09-09 12:03:57,903", "name": "test logger", "levelname": "INFO", "message": "this is just info", "lineno": 43, "processName": "MainProcess", "funcName": "<module>", "module": "main", "pathname": "\\\\work\\tech\\Henry\\Programs\\Python\\infigo automation\\Automation POM\\main.py"}
+{"asctime": "2021-09-09 12:03:57,904", "name": "test logger", "levelname": "WARNING", "message": "this is a warning ", "lineno": 44, "processName": "MainProcess", "funcName": "<module>", "module": "main", "pathname": "\\\\work\\tech\\Henry\\Programs\\Python\\infigo automation\\Automation POM\\main.py"}

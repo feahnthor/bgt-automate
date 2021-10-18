@@ -4,8 +4,10 @@ class Locators:
   """
 #Locators for login page
   test = 'https://backgroundtown.com/Admin/Product' 
-  base_prod_url = 'https://backgroundtown.com/Admin/Product/Edit/2514' #Mark Lane
-  base_floor_prod_url = 'https://backgroundtown.com/Admin/Product/Edit/2568' #Mark Lane
+  base_prod_url = 'https://backgroundtown.com/Admin/Product/Edit/2629' #Mark Lane
+  #base_prod_url = 'https://backgroundtown.com/Admin/Product/Edit/2605' #Kara KMC
+  # base_floor_prod_url = 'https://backgroundtown.com/Admin/Product/Edit/2568' #Mark Lane
+  base_floor_prod_url = 'https://backgroundtown.com/Admin/Product/Edit/2606' # Kara KMC
   email = 'Email:'
   password = 'Password:'
   login_button = 'login'
@@ -81,7 +83,15 @@ class Locators:
   attribute = 'Attributes'
   popup_esc_tab = 'General'
 
-  attribute_combinations = '#attributecombinations-grid tr'
+## Variant Size
+  var_delete_btn = '#pvav-grid tbody tr td:nth-of-type(11)'
+  variant_name = '#pvav-grid tbody tr td:nth-of-type(1)' # cannot be a value of 0
+  var_row_selector = '#pvav-grid tbody tr'
+
+
+  attribute_combinations = '#attributecombinations-grid tbody tr'
+## New Combination window
+  image_tab = '#productattributecombination-edit li' # use index 1
 
 
  
