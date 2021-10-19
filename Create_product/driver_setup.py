@@ -21,7 +21,7 @@ class DriverSetup:
     
     logger.info('Starting Firefox driver')
     try:
-      self.driver = start_firefox(self.url, headless=True).maximize_window()
+      self.driver = start_firefox(self.url).maximize_window()
     except Exception as e:
       logger.critical('Firefox driver Failed to start')
       DriverSetup.done(self)

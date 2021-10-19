@@ -1,0 +1,15 @@
+Metadata-Version: 2.1
+Name: Create-Products
+Version: 0.0.0
+Summary: Update existing products for backgroundtown
+Home-page: UNKNOWN
+Author: feahnthor
+License: MIT
+Keywords: helium,automation,update
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.6
+
+UNKNOWN
+

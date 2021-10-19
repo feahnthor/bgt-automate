@@ -1,3 +1,13 @@
+"""
+Author: Henry F.
+Description: Contains functions that should only be called while on a base product url such as https://backgroundtown.com/Admin/Product/Edit/{id} 
+    Things to note: 
+      1. Only one function `upload_img()` is called here and also variants.py, as the upload of an image is exactly the same, only change what is appended to the image name
+      2. If any changes has been made to the baseproduct make sure to call save_and_edit(). *add_tags()* does not save unless `save_and_edit()` is called
+      3. Function `go_to_variants()` should be the last to be called as it switches to the variants page and should start using variants.py functions
+"""
+
+
 from selenium.webdriver.support import wait
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -9,7 +19,7 @@ from locators import Locators
 from dir_location import DirLocation
 from dir_location import Variables
 from dir_location import SubFolder
-from helium import *
+from helium import * # to see available methods hit F12 while using VS Code or Visual Studio
 import collections
 import re
 import os
@@ -36,7 +46,8 @@ DESIGNER_CODE = {
   "molly long" : "82100851,82100852",
   "mitch green" : "82100853,82100854",
   "paul kestel" : "82100854,82100856",
-  "chris garcia" : "82100857,82100858"
+  "chris garcia" : "82100857,82100858",
+  "Barbara Yonts": "82100869",
 }
 
 class BaseProduct:
@@ -99,11 +110,13 @@ class BaseProduct:
     WebDriverWait(self.driver, 30).until(EC.invisibility_of_element_located((By.ID, Locators.copy_window)))
     self.current_url = self.driver.current_url
     logger.info(f'Product copied successfully.\nCurrent url: {self.current_url}')
+    click(Locators.published) # Sets product to be visible to customers
+    click(Locators.show_in_search) # Sets products to be visible in search results
+
 
   def save_and_edit(self):
     '''
-    ***Currently not working as intended. After clicking the save button,
-    the next function will time out trying to find something to click on the page
+    ***Must be called second to last as go_to_variants() will be called next***
     '''
     self.save = Locators.save_and_continue
     logger.info('Saving and Continuing Edit...')
@@ -111,12 +124,11 @@ class BaseProduct:
     self.copy_prod_btn_id.location_once_scrolled_into_view
     click(self.save)
     WebDriverWait(self.driver, 30).until(EC.staleness_of(self.copy_prod_btn_id))
-    # WebDriverWait(self.driver, 30).until(EC.invisibility_of_element_located((By.ID, Locators.product_edit_tabs)))
 
   def upload_img(self, web=SubFolder.web, pop_up_window=False, img_name_variant=None, img_type='.jpg'):
     """
     Primarily made to  upload web icon image products,
-    ***will need to update handling random files***
+    [x] ***will need to update handling random files - COMPLETED***
     :param web: The (string) of a subfolder i.e. \\web\\
     :param pop_up_window: Should only be True if this ```upload file``` appears within a \
     popup window as there are more steps needed to close it to return to main window
@@ -129,7 +141,7 @@ class BaseProduct:
     # WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located((By.CSS_SELECTOR, Locators.product_edit_tabs)))
     # wait_until(Text('Pictures').exists)
     self.web = web
-    self.upload = Locators.upload
+    self.upload = Locators.upload # Expected value to be "Upload a file". Open locators.py and search for "upload" to make edits
     self.pop_up = pop_up_window
     self.img_name_variant = img_name_variant
     self.img = DirLocation.production + self.designer + self.web + self.name
@@ -140,17 +152,20 @@ class BaseProduct:
     else:
       self.img = self.img + self.img_type
     logger.info(f'Image to upload in upload_img() {self.img}')
-    click(self.upload)
-    logger.info(f'Available windows: {self.driver.window_handles}')
-    write(self.img)
-    press(ENTER+ENTER)
-    wait_until(Text(self.add).exists)
-    click(self.add)
-    if self.pop_up == True:
-      click(self.popup_esc)
-      # click(self.update) # DO NOT WANT THE PAGE RELOADED TO GET A STALEELEMENT
-      logger.info('Attribute combination page upload image pop closed successfully')
-
+    if os.path.isfile(self.img):
+      click(self.upload)
+      logger.info(f'Available windows: {self.driver.window_handles}')
+      write(self.img)
+      press(ENTER+ENTER)
+      wait_until(Text(self.add).exists)
+      click(self.add)
+      if self.pop_up == True:
+        click(self.popup_esc)
+        # click(self.update) # DO NOT WANT THE PAGE RELOADED TO GET A STALEELEMENT
+        logger.info('Attribute combination page upload image pop closed successfully')
+    else:
+      logger.warning(f'{self.img} did not exist {self.driver.current_url}')
+      pass
   def prod_img(self):
     """
     Clicks image tab then calls upload image
@@ -164,14 +179,15 @@ class BaseProduct:
 
   def add_tags(self):
     """
+
     ***Does not yet handle new tags - `Complete`***
     For scrollable UI elements that do not create their own window handles such as list using methods\
       scroll_down(), press(```Keys for scrolling```) only affects the main window \
         driver().location_once_scrolled_into_view allows for scrolling into view
           https://stackoverflow.com/questions/41744368/scrolling-to-element-using-webdriver
     """
-    tags = self.tags + self.designer + self.colors + self.themes
-    # Resolves Karas issue of not having to type the tags into the intranet form, since desinger, colors, and themes are added to the tags
+    tags = self.tags + [self.designer] + self.colors + self.themes # designer is a string, has to be made into a array for concatination
+    # Resolves Karas issue of not having to type the tags into the intranet form. desinger, colors, and themes will be added to the tags
     self.tag_loc = Locators.tag_class
     wait_until(Text(self.copy).exists)
     self.copy_prod_btn_id = self.driver.find_element_by_id('copyproduct')

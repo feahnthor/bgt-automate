@@ -1,9 +1,10 @@
-from Pages.login import Login
-from locators import Locators
-from Pages.baseproduct import BaseProduct
+# Import other python files from folders in this directory to use
+from Pages.login import Login # In the ./pages/ folder use login.py and use Login() class. Only used to start the program
+from Pages.variants import Variants # function that will be used on the Variants page; such as editing sizes
+from Pages.baseproduct import BaseProduct # functions that will be used on the product home page that contains Categories
+from locators import Locators # In this current directory use locators.py and use Locators class. Only has variables no functions
 from dir_location import DirLocation
 from file_handler import FileHandler
-from Pages.variants import Variants
 
 from helium import *
 import logging
