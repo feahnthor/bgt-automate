@@ -1,0 +1,22 @@
+# https://www.python.org/dev/peps/pep-0518/
+# https://stackoverflow.com/questions/62983756/what-is-pyproject-toml-file-for
+#https://pip.pypa.io/en/latest/reference/build-system/pyproject-toml/
+
+
+# This is the config file that python now uses in place of setup.py
+# pip can read this pyproject.toml
+
+# python -m pip install .
+
+[build-system]
+# Minimum requirements for the build system to execute.
+    requires = [
+        "setuptools",
+        "wheel",
+        'PySide6',
+        'python-json-logger',
+        'selenium',
+        'numpy',
+        'toml',
+        'logging'
+    ] # PEP 508 specifications.

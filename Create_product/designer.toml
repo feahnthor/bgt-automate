@@ -1,0 +1,5 @@
+# This is a toml document used for configs
+[DESIGNER_CODE]
+# Designer names should be lowercase and should contain no spaces
+lori_nordstorm.ultraclcoth = '82100823'
+lori_nordstorm.newfab = '82100844'

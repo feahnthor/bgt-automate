@@ -5,6 +5,7 @@ Description: Contains functions that should only be called while on a base produ
       1. Only one function `upload_img()` is called here and also variants.py, as the upload of an image is exactly the same, only change what is appended to the image name
       2. If any changes has been made to the baseproduct make sure to call save_and_edit(). *add_tags()* does not save unless `save_and_edit()` is called
       3. Function `go_to_variants()` should be the last to be called as it switches to the variants page and should start using variants.py functions
+      4. IMPORTANT: 
 """
 
 
@@ -47,7 +48,7 @@ DESIGNER_CODE = {
   "mitch green" : "82100853,82100854",
   "paul kestel" : "82100854,82100856",
   "chris garcia" : "82100857,82100858",
-  "Barbara Yonts": "82100869",
+  "barbara yonts": "82100869",
 }
 
 class BaseProduct:

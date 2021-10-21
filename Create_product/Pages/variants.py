@@ -1,3 +1,9 @@
+"""
+Author: Henry F.
+Description: Contains functions that should only be called while on a variant product url such as https://backgroundtown.com/Admin/ProductVariant/Edit/{id} 
+
+"""
+
 
 import logging
 from helium import *
@@ -25,12 +31,14 @@ NEW_SIZES = {
 
 }
 
-class Variants(BaseProduct): # Impletements BaseProduct
+class Variants(BaseProduct): # Implements BaseProduct
 
   def __init__(self, **kwargs) -> None:
     # invoke BaseProduct.__init__
-    super().__init__(**kwargs)
-    print('Variants', self.name)
+    super().__init__(**kwargs) # Allows for this method to call methods variables as though in the baseproduct.py file
+    print(self.name) # test to make sure that BaseProduct has been implemented correctly, as self.name is the first thing declared in the __init__()
+    # `self` is an object that now contains all functions and variables stored to in in baseproduct.py
+    self.url = self.driver.current_url
 
   def get_combination_elements(self):
     """
@@ -71,8 +79,8 @@ class Variants(BaseProduct): # Impletements BaseProduct
     """
     ***Page does not need to reload to add an image, so only calling get_combination_elements() once is enough***
     Helium does not seem to be able to recognize when selenium switches to a new window. No idea why it doesn't work in this function
-    but is able to work perfectly fine amd make helium calls in the BaseProduct.upload_img() method
-    so its best to use selenium methods to find elements then use helium for clicks using the selenium web-element
+    but is able to work perfectly fine and make helium calls in the BaseProduct.upload_img() method
+    so its best to use selenium methods to find elements, then use helium for clicks using the selenium web-element
     """
     click('Attribute Combination')
     combination_elements_list, foo = self.get_combination_elements() # index 0 is the string of the size
@@ -93,27 +101,17 @@ class Variants(BaseProduct): # Impletements BaseProduct
         BaseProduct.upload_img(self, pop_up_window=True, img_name_variant=file)
         self.close_window() # closes window without saving to prevent staleelement exception
     variant_top = self.driver.find_element_by_id(Locators.top_of_variant_page)
-    variant_top.location_once_scrolled_into_view 
-
-  def sort_sizes(self):
-    """
-    To Do for attribute sort: 
-    1. Fix program to accept url or product to edit without a json
-    2. Allow user to enter sizes to be added
-    """
-    pass
-
+    variant_top.location_once_scrolled_into_view
   
   def delete_combination(self):
     """
     ***Deleting an element will reload the page, will need to call get_combination_element in a loop to
     avoid Stale Element Exceptions***
     ***An alert pops up after hitting delete with options 'Ok' and 'Cancel'***
-    # Need to increase speed of these loops, much slower than delete sizes
+    # Need to increase speed of these loops, much slower than `delete_sizes()`
     """
 
     click('Attribute Combination')
-    # foo, combination_elements_dict = self.get_combination_elements() # index 0 is the string of the size
     try:
       row_elements = np.array(self.driver.find_elements_by_css_selector(Locators.attribute_combinations))
       total_combinations = len(row_elements)
@@ -228,6 +226,7 @@ class Variants(BaseProduct): # Impletements BaseProduct
 
   def delete_logic(self):
     """
+    ------Deprecated: delete sizes does this as a side effect--------
     ***Major issue that keeps presenting a stale element exception after successfully deleting
     a item, trying to call logic_elements[i] fails --COMPLETED used expected condition .stalenessof
     https://stackoverflow.com/questions/60535663/how-to-scroll-a-web-page-down-until-specific-button-to-click
@@ -267,7 +266,7 @@ class Variants(BaseProduct): # Impletements BaseProduct
     handles = self.driver.window_handles
 
     print(f'UPDATING CODES! CODES AVAIALABLE: {self.codes}')
-    wait_until(Text(Locators.attribute_edit, to_right_of=Locators.attribute_label_2).exists)
+    wait_until(Text(Locators.attribute_edit, to_right_of=Locators.attribute_label_2).exists) # to the right of "Mentor"
     click(Text(Locators.attribute_edit, to_right_of=Locators.attribute_label_2))
     wait_until(Text(self.edit).exists)
     
@@ -347,20 +346,19 @@ class Variants(BaseProduct): # Impletements BaseProduct
     pass
   
   def go_back_to_variant(self):
-    wait_until(Text(Locators.back_to_variants).exists)
-    click(Text(Locators.back_to_variants))
-    click(Locators.attributes)
+    # self explanatory
+    go_to(self.url)
 
   def delete_size(self):
     """
     1. Takes in no arguments, uses similar method to delete fields as `Varants.delete_combination()`
     Notes:
-      Any New size added after that contains a special character besides " can be handled in size_compare variable, its best to create a sanitize_string() function
-      `nth-of-type` can be found in mozilla docs is Extremely useful as before i had to create my own functions to separate the array/list of table elements. see `get_combination_elements()` if it hasn't been
+      1. Any New size added after that contains a special character besides " can be handled in `size_compare` variable, its best to create a `sanitize_string()` function
+      2. `nth-of-type` can be found in mozilla docs is Extremely useful as before i had to create my own functions to separate the array/list of table elements. see `get_combination_elements()` if it hasn't been
       deleted
     2. This MUST run after delete_logic as Infigo will not allow a size to be deleted if the logic still exists.
-      *** No longer true as of 10/13/21. Infigo seems to have updated so if a size is deleted here, it also deletes the logic***
-    3. count need to be set back to 0 once a size has been deleted so it starts
+      *** ABOVE IS NO LONGER TRUE as of 10/13/21. Infigo seems to have updated so if a size is deleted here, it also deletes the logic***
+    3. `count` needS to be set back to 0 once a size has been deleted so it starts
     """
     # To change these values go to Locators file
     url = self.driver.current_url

@@ -8,8 +8,12 @@ import logging
 logger = logging.getLogger(__name__)
 
 class Login(DriverSetup):
-  def __init__(self, url) -> None:
-    super().__init__(url=url)
+  def __init__(self, url, headless=False) -> None:
+    super().__init__(url=url, headless=headless)
+    """
+    This class is resusable as it only accepts an url to login and send it to DriverSetup class. Should only really
+      be called once, as once logged in sessions can continue without the prompt during redirects
+    """
     # set variables for input into login page
     self.url = url
     self.email = Credentials.email

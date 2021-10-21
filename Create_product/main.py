@@ -34,7 +34,7 @@ def main():
   first_json_object = FileHandler(os.listdir()[0]).open_json()
   url, is_floor = get_base_url(first_json_object) #determines which template url to use
 
-  Login(url)
+  Login(url, headless=True) # param: headless=False is false be default, change it to run in headless mode
 
   logger.info(f'Retrieving json from {DirLocation.add_to_bgtown}')
   count = 0
