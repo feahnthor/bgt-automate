@@ -1,3 +1,0 @@
-helium
-asana
-python-json-logger

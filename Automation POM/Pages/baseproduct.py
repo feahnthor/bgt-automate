@@ -170,7 +170,7 @@ class BaseProduct:
         driver().location_once_scrolled_into_view allows for scrolling into view
           https://stackoverflow.com/questions/41744368/scrolling-to-element-using-webdriver
     """
-    tags = self.tags + self.designer + self.colors + self.themes
+    tags = self.tags + [self.designer] + self.colors + self.themes
     # Resolves Karas issue of not having to type the tags into the intranet form, since desinger, colors, and themes are added to the tags
     self.tag_loc = Locators.tag_class
     wait_until(Text(self.copy).exists)

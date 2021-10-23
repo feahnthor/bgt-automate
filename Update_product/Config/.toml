@@ -1,0 +1,21 @@
+# Contains variables for functions to use later
+
+[elements]
+login.email = "LoginEmail"
+login.password = "LoginPassword"
+login.btn = "loginbutton"
+
+
+[var] 
+# For Variants page
+
+attr_tab = "#productvariant-edit li:nth-child(3)"# Used to get to the variants tab
+get_size_page = "#productvariantattributes-grid tr td:nth-child(7) [href]" # use to click `View/Edit value (Total: 22)` where size is
+size.size_name = "#productvariantattribute-form tr td:nth-of-type(2)"  # Size such as 4'x5' Ultracloth
+size.display_order = "#productvariantattribute-form tr td:nth-of-type(8)"  # Display order used to sort
+size.edit_btn = "#productvariantattribute-form tr td:nth-of-type(10)"  # Display order used to sort
+size.row = "#productvariantattribute-form tr"  # Display order used to sort
+
+# New window to change Size attributes after click the edit Button
+size.window.order = "DisplayOrder" # this is an id and will use driver.find_element_by_id()
+size.window.save_btn = "button[type=submit]" 

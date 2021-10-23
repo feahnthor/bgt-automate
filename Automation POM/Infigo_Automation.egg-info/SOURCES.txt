@@ -1,6 +1,0 @@
-setup.py
-Infigo_Automation.egg-info/PKG-INFO
-Infigo_Automation.egg-info/SOURCES.txt
-Infigo_Automation.egg-info/dependency_links.txt
-Infigo_Automation.egg-info/requires.txt
-Infigo_Automation.egg-info/top_level.txt

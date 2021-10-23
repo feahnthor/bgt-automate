@@ -1,0 +1,6 @@
+setup.py
+Update_Products.egg-info/PKG-INFO
+Update_Products.egg-info/SOURCES.txt
+Update_Products.egg-info/dependency_links.txt
+Update_Products.egg-info/requires.txt
+Update_Products.egg-info/top_level.txt
