@@ -4,7 +4,7 @@
 
 
 # This is the config file that python now uses in place of setup.py
-# pip can read this pyproject.toml
+# pip can read this pyproject.toml just run what is below in the terminal
 
 # python -m pip install .
 
@@ -14,9 +14,11 @@
         "setuptools",
         "wheel",
         'PySide6',
-        'python-json-logger',
-        'selenium',
-        'numpy',
-        'toml',
-        'logging'
+        "python-json-logger",
+        "selenium",
+        "numpy",
+        # "logging", already a python default from 3.5 +p
+        "helium",
+        "dotmap"
     ] # PEP 508 specifications.
+    # dotmap allows for using periods to reference dict objects https://stackoverflow.com/questions/2352181/how-to-use-a-dot-to-access-members-of-dictionary

@@ -18,7 +18,7 @@ setup(
         'Programming Language :: Python :: 3',
     ],
     keywords = 'infigo, automation, update',
-    packages = find_packages(include=['PySide6','python-json-logger']), # necessary for this program to run at all
-    install_requires = ['PySide6', 'python-json-logger'],
+    packages = find_packages(include=['PySide6','python-json-logger', 'helium,', 'wheel', 'toml', 'numpy', 'selenium']), # necessary for this program to run at all
+    install_requires = ['PySide6','python-json-logger', 'helium,', 'wheel', 'toml', 'numpy', 'selenium'],
     python_requires = '>=3.6'
     )

@@ -48,7 +48,7 @@
         "level": "INFO",
         "class": "logging.FileHandler",
         "formatter": "json",
-        "filename": "\\\\work\\tech\\Henry\\Programs\\Python\\Infigo Automation\\update_product\\Logs\\Runtime {time}.log",
+        "filename": "\\\\work\\tech\\Henry\\Programs\\Python\\bgt-automate\\update_product\\Logs\\Runtime {time}.log",
         "mode": "a",
         "encoding": "utf-8"
       },

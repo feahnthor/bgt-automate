@@ -10,7 +10,7 @@ import numpy as np
 from natsort import natsorted # sorts into human understandable sort. So no [1, 11, 12, 3] but [1, 3, 11, 12]
 from dotmap import DotMap # pip install dotmap, allows for dict objects to be accessed using periods
 
-sys.path += ['\\\\work\\tech\\henry\\programs\\python\\infigo automation\\create_product'] # adds to path
+sys.path += ['\\\\work\\tech\\henry\\programs\\python\\bgt-automate\\create_product'] # adds to path
 from file_handler import FileHandler
 
 logger = logging.getLogger(__name__)
@@ -22,7 +22,7 @@ class Variants:
   """
   def __init__(self) -> None: 
     # unlike the functions from Create_product drivers must go in the individual functions and not be declared in the init  
-    self.conf = FileHandler('\\\\work\\tech\\Henry\\Programs\\Python\\infigo automation\\Update_product\\Config\\.toml').open_toml()
+    self.conf = FileHandler('\\\\work\\tech\\Henry\\Programs\\Python\\bgt-automate\\Update_product\\Config\\.toml').open_toml()
     self.m_conf = DotMap(self.conf).var # now able to use dot notation for object/dict : means mapped_config
     self.start_time = time.perf_counter()
 

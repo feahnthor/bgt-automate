@@ -7,7 +7,7 @@ import os
 import sys
 from dotmap import DotMap # pip install dotmap, allows for dict objects to be accessed using periods
 
-sys.path += ['\\\\work\\tech\\henry\\programs\\python\\infigo automation\\create_product'] # adds to path
+sys.path += ['\\\\work\\tech\\henry\\programs\\python\\bgt-automate\\create_product'] # adds to path
 from credentials import Credentials
 from file_handler import FileHandler
 from dir_location import DirLocation

@@ -1,2 +1,7 @@
 PySide6
 python-json-logger
+toml
+selenium
+numpy
+natsort
+dotmap

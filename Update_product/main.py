@@ -10,7 +10,7 @@ import time
 from Pages.login import Login # use to login Must be first to be called
 from Pages.Variants import Variants # uses local one
 
-sys.path += ['\\\\work\\tech\\henry\\programs\\python\\infigo automation\\create_product'] # adds to path
+sys.path += ['\\\\work\\tech\\henry\\programs\\python\\bgt-automate\\create_product'] # adds to path
 # Use/import methods from other directories https://www.reddit.com/r/learnpython/comments/q850ll/eli5_why_i_cant_import_from_another_director_and/hgn06xs/?context=3
 from credentials import Credentials
 from locators import Locators
@@ -27,7 +27,7 @@ Set up logger, the config for this logger can be found in loggin_config.json whi
     there are several options for the logger including sending SMTP emails once a status of WARN or greater has been met, to change the
     email and the layout of the log, just make changes to the config
 """
-logging.config.dictConfig(FileHandler(f'\\\\work\\tech\\henry\\programs\\python\\infigo automation\\update_product\\loggin_config.json').open_json())
+logging.config.dictConfig(FileHandler(f'\\\\work\\tech\\henry\\programs\\python\\bgt-automate\\update_product\\loggin_config.json').open_json())
 logger = logging.getLogger(__name__)
 
 drivers = [DriverSetup(f'https://backgroundtown.com/Admin/ProductVariant/Edit/{str(i)}', headless=False)._get_driver() for i in all_products_list]

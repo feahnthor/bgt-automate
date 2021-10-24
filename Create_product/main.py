@@ -25,7 +25,7 @@ To Do for attribute sort:
 https://selenium-python.readthedocs.io/api.html
 """
 
-logging.config.dictConfig(FileHandler('\\\\work\\tech\\Henry\\Programs\\Python\\Infigo Automation\\create_product\\loggin_config.json').open_json())
+logging.config.dictConfig(FileHandler('\\\\work\\tech\\Henry\\Programs\\Python\\bgt-automate\\create_product\\loggin_config.json').open_json())
 # Create logger
 logger = logging.getLogger(__name__)
 
