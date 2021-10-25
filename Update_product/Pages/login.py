@@ -3,8 +3,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import logging
-import os
 import sys
+import time
 from dotmap import DotMap # pip install dotmap, allows for dict objects to be accessed using periods
 
 sys.path += ['\\\\work\\tech\\henry\\programs\\python\\bgt-automate\\create_product'] # adds to path
@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 
 class Login:
   def __init__(self) -> None:
+    self.start_time = time.perf_counter()
     directory = DirLocation()    
     self.conf = FileHandler(f'{directory.update_prod_location}\\config\\.toml').open_toml()
     self.m_conf = DotMap(self.conf).elements # now able to use dot notation for object/dict : means mapped_config
@@ -46,3 +47,5 @@ class Login:
     password_field.send_keys(Credentials.password)
     submit = driver.find_element_by_class_name(m.login.btn)
     submit.click()
+    elapsed_time = time.perf_counter() - self.start_time
+    logger.info(f'Elapsed time for Login for sort_sizes(): {elapsed_time:0.4f} Seconds')

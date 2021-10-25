@@ -6,6 +6,7 @@ import logging
 import os
 import sys
 import time
+import re
 import numpy as np
 from natsort import natsorted # sorts into human understandable sort. So no [1, 11, 12, 3] but [1, 3, 11, 12]
 from dotmap import DotMap # pip install dotmap, allows for dict objects to be accessed using periods
@@ -21,7 +22,7 @@ class Variants:
   isn't used. 
   """
   def __init__(self) -> None: 
-    # unlike the functions from Create_product drivers must go in the individual functions and not be declared in the init  
+    # unlike the functions from Create_product `drivers` must go in the individual functions and not be declared in the init  
     self.conf = FileHandler('\\\\work\\tech\\Henry\\Programs\\Python\\bgt-automate\\Update_product\\Config\\.toml').open_toml()
     self.m_conf = DotMap(self.conf).var # now able to use dot notation for object/dict : means mapped_config
     self.start_time = time.perf_counter()
@@ -32,10 +33,14 @@ class Variants:
         to make sure the driver was setup correctly. Drivers should have access to a simple method like `driver.current_url`
     :param order_difference: (int) of what each size will be sorted by. i.e. 0, 5, 10, 15
     """
+  
     m = self.m_conf
     url = driver.current_url
 
     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, m.attr_tab)))
+    title_str = driver.find_element_by_class_name('title').get_attribute('textContent')
+    title = re.search(': (\w+(\s\w+)?(\s\w+)?)', title_str).group(1) # since everything inside the parenthesis is within one parent, it is still group one
+    # Regex for this means find a word after a `:` then check if there are two more words, `?` means they are optional and do not have to be present
     attribute_tab = driver.find_element_by_css_selector(m.attr_tab)
     attribute_tab.click() # find Attributes tab then clicks it
 
@@ -68,14 +73,16 @@ class Variants:
       ####### Check to make sure things are sorted before looping ###### 
       # compare_sort_size_list = sorted_size_list
       # compare_readable_size_list = readable_size_list
-      # try:
-      #   compare_sort_size_list.remove
-      # except Exception as e:
-      #   pass
+      # if 'NewFab' in compare_readable_size_list: # should be true for both
+      #   nf_loc_list = np.where(compare_readable_size_list == """3'9"x5' NewFab""", compare_readable_size_list == """5'x6'8" NewFab""") 
+      #   try:
+      #     compare_sort_size_list.remove
+      #   except Exception as e:
+      #     pass
 
-      if sorted_size_list == readable_size_list:
+      if sorted_size_list == readable_size_list and "4'x5' Ultracloth" not in sorted_size_list and "5'x4' Ultracloth" not in sorted_size_list: # Skip product if already sorted
         _sorted = True
-        logger.info(f'This product is already sorted \n{sorted_size_list}')
+        logger.info(f'This product {title} is already sorted \n{sorted_size_list}')
 
       while _sorted != True:
         # Check to make sure that current sort is the same as sorted_size
@@ -97,11 +104,11 @@ class Variants:
           attr_dict[sorted_size_key].location_once_scrolled_into_view # Make sure item is scroll in order to click and avoid errors
 
           attr_dict[sorted_size_key].click() # Use size as key to access the related button store in attr_dict
-          WebDriverWait(driver, 10).until(EC.number_of_windows_to_be(2))
+          WebDriverWait(driver, 60).until(EC.number_of_windows_to_be(2))
           driver.switch_to.window(driver.window_handles[-1]) # switch to newest windows to edit size
 
           ##### Update Display order ######
-          WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, m.size.window.order)))
+          WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.ID, m.size.window.order)))
           if 'NewFab' not in sorted_size_key: # makes it so if a value like NewFab is encountered the sequence continues, so no 0, 0, 10, 15
             count += 1 
             new_order = str(count*order_difference)
@@ -111,6 +118,7 @@ class Variants:
             new_order = '0'
           order_field = driver.find_element_by_id(m.size.window.order)
           order_field.clear()
+          order_field.send_keys(new_order)
 
           ##### Close Window #######
           save_btn = driver.find_element_by_css_selector(m.size.window.save_btn)
@@ -120,6 +128,6 @@ class Variants:
         _sorted = True # Exit Loop
 
       elapsed_time = time.perf_counter() - self.start_time
-      logger.info(f"Elapsed time for Variants sort sizes: {elapsed_time:0.4f} seconds")
+      logger.info(f"Elapsed time for Variants sort sizes: {elapsed_time:0.4f} Seconds")
     except Exception as e:
-      logger.critical(f'Unhandled exception in \\Update_product\\Pages\\variants.py while trying to sort_sizes() \n{driver.current_url}\n{e}')
+      logger.critical(f'Product {title}\nUnhandled exception in \\Update_product\\Pages\\variants.py while trying to sort_sizes() \n{driver.current_url}\n{e}')

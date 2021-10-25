@@ -5,10 +5,10 @@ login.email = "LoginEmail"
 login.password = "LoginPassword"
 login.btn = "loginbutton"
 
-
+[bgt_api]
+key = 'NjMwMWQwODMtZmEyMS00ZTY4LTgwZWQtMzgzZjc4MDQ1ZGMw' # change if API Token has been changed
 [var] 
 # For Variants page
-
 attr_tab = "#productvariant-edit li:nth-child(3)"# Used to get to the variants tab
 get_size_page = "#productvariantattributes-grid tr td:nth-child(7) [href]" # use to click `View/Edit value (Total: 22)` where size is
 size.size_name = "#productvariantattribute-form tr td:nth-of-type(2)"  # Size such as 4'x5' Ultracloth
