@@ -34,7 +34,7 @@ def main():
   first_json_object = FileHandler(os.listdir()[0]).open_json()
   url, is_floor = get_base_url(first_json_object) #determines which template url to use
 
-  Login(url, headless=True) # param: headless=False is false be default, change it to run in headless mode
+  Login(url, headless=False) # param: headless=False is false be default, change it to run in headless mode
 
   logger.info(f'Retrieving json from {DirLocation.add_to_bgtown}')
   count = 0
@@ -61,6 +61,7 @@ def main():
     # if is_floor != True: # floors do not have attribute logic to delete
       # variants_page.delete_logic()  # delete_logic may be deprecated as delete_size() does the same
     start_time = time.perf_counter()
+    variants_page.update_codes()
     variants_page.delete_size() # delete_logic() is deprecated and has been replaced with delete_size() look at delete_size() comments for more info
     elapsed_time = time.perf_counter() - start_time
     print(f"delete_size() Elapsed time: {elapsed_time:0.4f} seconds")

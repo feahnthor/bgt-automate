@@ -30,25 +30,26 @@ import sys
 logger = logging.getLogger(__name__)
 
 DESIGNER_CODE = {
-  "lori nordstrorm" : "82100823,82100844",
-  "jim churchill" : "82100824,82100843",
-  "annie marie" : "82100825,82100834",
-  "cindy romano" : "82100826,82100835",
-  "dennis hammon" : "82100827,82100836",
-  "doran wilson" : "82100828,82100837",
-  "mark lane" : "82100829,82100838",
-  "michael mowbray" : "82100830,82100839",
-  "nancy emmerich" : "82100831,82100840",
-  "tessa cole" : "82100832,82100841",
-  "thom rouse" : "82100833,82100842",
-  "christie newell" : "82100846,82100845",
-  "cheri hammon" : "82100847,82100848",
-  "jeni b" : "82100849,82100850",
-  "molly long" : "82100851,82100852",
-  "mitch green" : "82100853,82100854",
-  "paul kestel" : "82100854,82100856",
-  "chris garcia" : "82100857,82100858",
-  "barbara yonts": "82100869",
+  "EXAMPLE": ["REGULAR_PRICE_CODE", "NEW_FAB_PRICE_CODE"],
+  "lori nordstrorm" : ["82100823,82100844"],
+  "jim churchill" : ["82100824,82100843"],
+  "annie marie" : ["82100825,82100834"],
+  "cindy romano" : ["82100826,82100835"],
+  "dennis hammon" : ["82100827,82100836"],
+  "doran wilson" : ["82100828,82100837"],
+  "mark lane" : ["82100829,82100838"],
+  "michael mowbray" : ["82100830,82100839"],
+  "nancy emmerich" : ["82100831,82100840"],
+  "tessa cole" : ["82100832,82100841"],
+  "thom rouse" : ["82100833,82100842"],
+  "christie newell" : ["82100846,82100845"],
+  "cheri hammon" : ["82100847,82100848"],
+  "jeni b" : ["82100849,82100850"],
+  "molly long" : ["82100851,82100852"],
+  "mitch green" : ["82100853,82100854"],
+  "paul kestel" : ["82100854,82100856"],
+  "chris garcia" : ["82100857,82100858"],
+  "barbara yonts": ["82100869", "82100864"]
 }
 
 class BaseProduct:
@@ -111,7 +112,7 @@ class BaseProduct:
     WebDriverWait(self.driver, 30).until(EC.invisibility_of_element_located((By.ID, Locators.copy_window)))
     self.current_url = self.driver.current_url
     logger.info(f'Product copied successfully.\nCurrent url: {self.current_url}')
-    click(Locators.published) # Sets product to be visible to customers
+    # click(Locators.published) # Sets product to be visible to customers
     click(Locators.show_in_search) # Sets products to be visible in search results
 
 
@@ -283,11 +284,15 @@ class BaseProduct:
     self.unnamed = Locators.unnamed
     self.attr = Locators.attribute
 
+    self.current_url = self.driver.current_url
+    var_url = re.sub('/Product/', '/ProductVariant/', self.current_url)
+
     try:
-      wait_until(Text(self.variants).exists)
-      click(self.variants)
-      wait_until(Text(self.unnamed).exists)
-      click(self.unnamed)
+      go_to(var_url)
+      wait_until(Text(self.attr).exists)
       click(self.attr)
     except StaleElementReferenceException:
       logger.warning(f'Unable to go to product variants page. Trying again... {self.name} \n{self.driver.current_url}')
+      go_to(var_url)
+      wait_until(Text(self.attr).exists)
+      click(self.attr)

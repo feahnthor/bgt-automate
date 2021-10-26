@@ -16,11 +16,15 @@ from locators import Locators
 from dir_location import DirLocation
 from dir_location import Variables
 from dir_location import SubFolder
+from file_handler import FileHandler
 import os
 import re
 import sys
 import numpy as np
 import pathlib
+from dotmap import DotMap
+
+
 """
 Stale element reference 
 https://stackoverflow.com/questions/16166261/selenium-webdriver-how-to-resolve-stale-element-reference-exception
@@ -39,6 +43,9 @@ class Variants(BaseProduct): # Implements BaseProduct
     print(self.name) # test to make sure that BaseProduct has been implemented correctly, as self.name is the first thing declared in the __init__()
     # `self` is an object that now contains all functions and variables stored to in in baseproduct.py
     self.url = self.driver.current_url
+    self.conf = FileHandler('\\\\work\\tech\\Henry\\Programs\\Python\\bgt-automate\\Update_product\\Config\\.toml').open_toml()
+    self.m_design_conf = DotMap(self.conf).designer_code # now able to use dot notation for object/dict : means mapped designer config
+    
 
   def get_combination_elements(self):
     """
@@ -262,28 +269,47 @@ class Variants(BaseProduct): # Implements BaseProduct
     Need to update to take in a unknown amount of attributes
     ***issue where exception pops up on attributes page  ***
     """
-    self.codes = self.prod_attr[Variables.json_codes][self.designer.lower()].split(',')
-    handles = self.driver.window_handles
 
-    print(f'UPDATING CODES! CODES AVAIALABLE: {self.codes}')
-    wait_until(Text(Locators.attribute_edit, to_right_of=Locators.attribute_label_2).exists) # to the right of "Mentor"
-    click(Text(Locators.attribute_edit, to_right_of=Locators.attribute_label_2))
-    wait_until(Text(self.edit).exists)
-    
-    click(Text(self.edit, to_right_of='40'))
-    wait_until(Text(Locators.code_name).exists)
-    write(self.codes[0], into=TextField(to_right_of=Locators.code_name))
-    write(self.codes[0], into=TextField(to_right_of=Locators.code_f_name))
-    click('Save')
-    self.driver.switch_to_window(handles[0])
-    wait_until(Text(self.edit).exists)
-    click(Text(self.edit, to_right_of='12.5'))
-    wait_until(Text(Locators.code_name).exists)
-    write(self.codes[1], into=TextField(to_right_of=Locators.code_name))
-    write(self.codes[1], into=TextField(to_right_of=Locators.code_f_name))
-    click('Save')
-    self.driver.switch_to_window(handles[0])
-    BaseProduct.go_to_variants(self)
+    designer = re.sub('\s', '_', self.designer.lower()) # will provide the string used to access the config and get the right product code
+    nf_code = self.m_design_conf[designer]['new_fab']
+    reg_code = self.m_design_conf[designer]['regular']
+    handles = self.driver.window_handles
+    cur_url = self.driver.current_url
+
+
+    try: 
+      wait_until(Text(Locators.attribute_edit, to_right_of=Locators.attribute_label_2).exists) # to the right of "Mentor"
+      click(Text(Locators.attribute_edit, to_right_of=Locators.attribute_label_2))
+      wait_until(Text(self.edit).exists)
+      
+      ############## Add Regular Code ###############
+      click(Text(self.edit, to_right_of='40')) # Regular designs have a price of $40
+      WebDriverWait(self.driver, 5).until(EC.number_of_windows_to_be(2)) # wait for new window to open
+      self.driver.switch_to.window(self.driver.window_handles[-1])
+      wait_until(Text(Locators.code_name).exists)
+      write(reg_code, into=TextField(to_right_of=Locators.code_name))
+      write(reg_code, into=TextField(to_right_of=Locators.code_f_name))
+      click('Save')
+
+      self.driver.switch_to_window(handles[0])
+      wait_until(Text(self.edit).exists)
+
+      ############# Add NewFab code ################
+      click(Text(self.edit, to_right_of='12.5'))
+      WebDriverWait(self.driver, 5).until(EC.number_of_windows_to_be(2))
+      wait_until(Text(Locators.code_name).exists)
+      write(nf_code, into=TextField(to_right_of=Locators.code_name))
+      write(nf_code, into=TextField(to_right_of=Locators.code_f_name))
+      click('Save')
+      self.driver.switch_to_window(handles[0])
+    except Exception as e:
+      logger.warning(f'Unhandled exception  when trying to Update Codes for designer in config {designer} {self.name} \n{self.driver.current_url}\n{e}')
+    finally:
+      #### Go back to variants ####
+      self.driver.switch_to_window(handles[0])
+      go_to(cur_url)
+      wait_until(Text(Locators.attribute).exists)
+      click(Locators.attribute)
 
   def update_price_aci(self, *args):
     """

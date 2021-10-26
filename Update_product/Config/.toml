@@ -7,6 +7,7 @@ login.btn = "loginbutton"
 
 [bgt_api]
 key = 'NjMwMWQwODMtZmEyMS00ZTY4LTgwZWQtMzgzZjc4MDQ1ZGMw' # change if API Token has been changed
+
 [var] 
 # For Variants page
 attr_tab = "#productvariant-edit li:nth-child(3)"# Used to get to the variants tab
@@ -18,4 +19,48 @@ size.row = "#productvariantattribute-form tr"  # Display order used to sort
 
 # New window to change Size attributes after click the edit Button
 size.window.order = "DisplayOrder" # this is an id and will use driver.find_element_by_id()
-size.window.save_btn = "button[type=submit]" 
+size.window.save_btn = "button[type=submit]"
+
+[designer_code]
+# Used `regex` to convert from json to this 
+# Text:  "lori nordstrorm" : ["82100823,82100844"],
+# Find: "(\w+)\W(\w+)\W{1,}"(\d{4,}),(\d{4,})"\W,
+# Replace: $1_$2.regular = "$3" # Regular blanket\n$1_$2.new_fab = "$4" # NewFab Blanket
+lori_nordstrorm.regular = "82100823" # Regular blanket
+lori_nordstrorm.new_fab = "82100844" # NewFab Blanket
+jim_churchill.regular = "82100824" # Regular blanket
+jim_churchill.new_fab = "82100843" # NewFab Blanket
+annie_marie.regular = "82100825" # Regular blanket
+annie_marie.new_fab = "82100834" # NewFab Blanket
+cindy_romano.regular = "82100826" # Regular blanket
+cindy_romano.new_fab = "82100835" # NewFab Blanket
+dennis_hammon.regular = "82100827" # Regular blanket
+dennis_hammon.new_fab = "82100836" # NewFab Blanket
+doran_wilson.regular = "82100828" # Regular blanket
+doran_wilson.new_fab = "82100837" # NewFab Blanket
+mark_lane.regular = "82100829" # Regular blanket
+mark_lane.new_fab = "82100838" # NewFab Blanket
+michael_mowbray.regular = "82100830" # Regular blanket
+michael_mowbray.new_fab = "82100839" # NewFab Blanket
+nancy_emmerich.regular = "82100831" # Regular blanket
+nancy_emmerich.new_fab = "82100840" # NewFab Blanket
+tessa_cole.regular = "82100832" # Regular blanket
+tessa_cole.new_fab = "82100841" # NewFab Blanket
+thom_rouse.regular = "82100833" # Regular blanket
+thom_rouse.new_fab = "82100842" # NewFab Blanket
+christie_newell.regular = "82100846" # Regular blanket
+christie_newell.new_fab = "82100845" # NewFab Blanket
+cheri_hammon.regular = "82100847" # Regular blanket
+cheri_hammon.new_fab = "82100848" # NewFab Blanket
+jeni_b.regular = "82100849" # Regular blanket
+jeni_b.new_fab = "82100850" # NewFab Blanket
+molly_long.regular = "82100851" # Regular blanket
+molly_long.new_fab = "82100852" # NewFab Blanket
+mitch_green.regular = "82100853" # Regular blanket
+mitch_green.new_fab = "82100854" # NewFab Blanket
+paul_kestel.regular = "82100854" # Regular blanket
+paul_kestel.new_fab = "82100856" # NewFab Blanket
+chris_garcia.regular = "82100857" # Regular blanket
+chris_garcia.new_fab = "82100858" # NewFab Blanket
+barbara_yonts.regular = "82100869" # Regular blanket
+barbara_yonts.new_fab = "82100864" # NewFab Blanket
