@@ -1,6 +1,9 @@
 import json
+import openpyxl
 import toml
 import logging
+from openpyxl import load_workbook
+from openpyxl import Workbook
 
 logger = logging.getLogger(__name__)
 
@@ -22,4 +25,17 @@ class FileHandler:
             data = toml.load(f)
          return data
       except FileNotFoundError as e:
+         logger.critical(f'Unable to open toml file at {self.file_object}')
+
+   def open_xlsx(self):
+      try:
+         wb = load_workbook(self.file_object) # Instantiate workbook
+         return wb
+      except:
+         logger.critical(f'Unable to open toml file at {self.file_object}')
+   
+   def create_xlsx(self):
+      try:
+         wb = Workbook()
+      except:
          logger.critical(f'Unable to open toml file at {self.file_object}')
